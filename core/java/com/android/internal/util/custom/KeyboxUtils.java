@@ -47,7 +47,7 @@ public class KeyboxUtils {
     }
 
     public static PrivateKey parsePrivateKey(String encodedKey, String algorithm) throws Exception {
-        // TODO: convert priv keys to pkcs8 here. we're using a script in playintegrity fix repo to convert keybox priv keys to pksc8
+        // TODO: bug: InvalidKeySpecException - convert priv keys to pkcs8 here. we're using a script in playintegrity fix repo to convert keybox priv keys to pksc8
         byte[] keyBytes = null;
         try {
             keyBytes = Base64.getDecoder().decode(encodedKey);
