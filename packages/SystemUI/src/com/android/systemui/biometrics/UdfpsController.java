@@ -1266,12 +1266,11 @@ public class UdfpsController implements DozeReceiver, Dumpable {
             }
             showUdfpsAnimation();
         }
-    }
 
-    if (view != null && view.getViewRootImpl() != null) {Add commentMore actions
+    if (view != null && view.getViewRootImpl() != null) {
             view.getViewRootImpl().notifyRendererOfExpensiveFrame();
         }
-
+    }
     private void onFingerUp(long requestId, @NonNull View view) {
         onFingerUp(
                 requestId,
