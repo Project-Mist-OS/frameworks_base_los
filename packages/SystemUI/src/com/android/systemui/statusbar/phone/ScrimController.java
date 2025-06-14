@@ -31,6 +31,7 @@ import android.animation.ValueAnimator;
 import android.annotation.IntDef;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.content.Context;
 import android.provider.Settings;
 import android.os.Handler;
 import android.os.Trace;
@@ -38,6 +39,7 @@ import android.os.UserHandle;
 import android.util.Log;
 import android.util.MathUtils;
 import android.util.Pair;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.animation.DecelerateInterpolator;
@@ -399,6 +401,7 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
             }
         });
         mColors = new GradientColors();
+        mBehindColors = new GradientColors();
         mPrimaryBouncerToGoneTransitionViewModel = primaryBouncerToGoneTransitionViewModel;
         mAlternateBouncerToGoneTransitionViewModel = alternateBouncerToGoneTransitionViewModel;
         mKeyguardTransitionInteractor = keyguardTransitionInteractor;
@@ -1570,27 +1573,27 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, Dump
 
     private void updateThemeColors() {
         if (mScrimBehind == null) return;
-        int background = Utils.getColorAttr(mScrimBehind.getContext(),
-                com.android.internal.R.attr.materialColorSurfaceDim).getDefaultColor();
-        int accent = Utils.getColorAttr(mScrimBehind.getContext(),
-                com.android.internal.R.attr.materialColorPrimary).getDefaultColor();
-        int surfaceBackground = Utils.getColorAttr(mScrimBehind.getContext(),
-                com.android.internal.R.attr.colorSurfaceHeader).getDefaultColor();
+        Context themedContext =
+                new ContextThemeWrapper(mScrimBehind.getContext(), R.style.Theme_SystemUI_QuickSettings);
+        int background = Utils.getColorAttrDefaultColor(themedContext,
+                com.android.internal.R.attr.materialColorSurfaceDim);
+        int accent = Utils.getColorAttrDefaultColor(themedContext,
+                com.android.internal.R.attr.materialColorPrimary);
         mColors.setMainColor(background);
         mColors.setSecondaryColor(accent);
         final boolean isBackgroundLight = !ContrastColorUtil.isColorDark(background);
         mColors.setSupportsDarkText(isBackgroundLight);
 
-        int surface = Utils.getColorAttr(mScrimBehind.getContext(),
-                com.android.internal.R.attr.materialColorSurface).getDefaultColor();
+        int surface = Utils.getColorAttrDefaultColor(themedContext,
+                R.attr.underSurface);
         for (ScrimState state : ScrimState.values()) {
             state.setSurfaceColor(surface);
         }
 
-        mBehindColors.setMainColor(surfaceBackground);
+        mBehindColors.setMainColor(surface);
         mBehindColors.setSecondaryColor(accent);
-        mBehindColors.setSupportsDarkText(
-                ColorUtils.calculateContrast(mBehindColors.getMainColor(), Color.WHITE) > 4.5);
+        final boolean isSurfaceBackgroundLight = !ContrastColorUtil.isColorDark(surface);
+        mBehindColors.setSupportsDarkText(isSurfaceBackgroundLight);
 
         mNeedsDrawableColorUpdate = true;
     }
