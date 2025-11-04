@@ -595,6 +595,4 @@
          color is set by the framework or not. -->
     <color name="navigation_bar_default">#00808080</color>
 
-    <!-- Accent TwoTone notification color-->
-    <color name="qs_color_inactive">@color/system_neutral2_10</color>
 </resources>
