@@ -14152,6 +14152,13 @@ public final class Settings {
         public static final String MEDIA_SQUIGGLE_ANIMATION = "media_squiggle_animation";
 
         /**
+         * Control whether to hide ADB and Developer settings enable status.
+         * @hide
+         */
+        @Readable
+        public static final String HIDE_DEVELOPER_STATUS = "hide_developer_status";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
@@ -19912,13 +19919,6 @@ public final class Settings {
          */
         @Readable
         public static final String SENSOR_BLOCKED_APP = "sensor_blocked_app";
-
-        /**
-         * Control whether to hide ADB and Developer settings enable status.
-         * @hide
-         */
-        @Readable
-        public static final String HIDE_DEVELOPER_STATUS = "hide_developer_status";
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
